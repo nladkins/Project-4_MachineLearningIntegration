@@ -32,7 +32,7 @@ Pandas was utilized to read the CSV and transform the data by grouping by month 
 
 Prophet is able to fit non-linear trends with seasonal effects and shifts in trends and was used to model the sales data and forecast demand over the next 24 months to match lead times for the purpose of inventory/production planning. Cross-validation was performed to measure performance and tune hyperparameters.
 
-After tuning the hyperparameters, we are able to minimize root mean squared error to under 500 units per year when training the model to fit 2014-2018 data and testing it to 2019 sales. The best hyperameters are then utilized to fit the model to the entire sales history from 2014 through 2021 and predict values for 2022 and 2023.
+After tuning the hyperparameters, we are able to minimize root mean squared error to under 500 units per year when training the model to fit 2014-2017 data and testing it to 2018-2019 sales. The best hyperameters are then utilized to fit the model to the entire sales history from 2014 through 2021 and predict values for 2022 and 2023.
 
 Spark was then utilized to load the results to RDS.
 
@@ -50,7 +50,7 @@ To deliver the analysis to the end-users, we needed both a front-end user-interf
 
 ## Analysis
 
-The erratic nature of Covid sales and logistics have shown in forecasting when using other methods such as exponential triple smoothing that have resulted in suspiciously high predictions. Thus it was necessary to test other models. Using Facebook Prophet's default parameters to forecast with the provided sales data shows monthly fluctuations as it attempts to model for seasonality. After tuning the hyperparameters, the lowest root mean squared error of 473 is reached by smoothing change points and seasonality effects in order to remove noisy data points resulting in a much closer to linear trend. The model seems to fit the data reasonably well when examining by year rather than by month; as it is impossible to forecast for the erratic fluctuations in monthly sales due to large inventory sell offs and limitations of available inventory but could be closer if lead times were shorter. The prophet model seems to be a bit mmore conservative in its predictions vs ETS and seems to be decent candidate for forecasting future demand, but individual analysis of more SKUs will be necessary.
+The erratic nature of Covid sales and logistics have shown in forecasting when using other methods such as exponential triple smoothing that have resulted in suspiciously high predictions. Thus it was necessary to test other models. Using Facebook Prophet's default parameters to forecast with the provided sales data shows monthly fluctuations as it attempts to model for seasonality. After tuning the hyperparameters, the lowest root mean squared error of 367 is reached by smoothing change points and seasonality effects slightly in order to remove noisy data points. The model seems to fit the data reasonably well when examining by year rather than by month; as it is impossible to forecast for the erratic fluctuations in monthly sales due to large inventory sell offs and limitations of available inventory but could be closer if lead times were shorter. The prophet model seems to be a bit mmore conservative in its predictions vs ETS and seems to be decent candidate for forecasting future demand, but individual analysis of more SKUs will be necessary.
 
 ![Tables](https://github.com/2Delta/Project-4_MachineLearningIntegration/blob/main/images/tables.png?raw=true)
 
