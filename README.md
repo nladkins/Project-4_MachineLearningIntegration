@@ -10,7 +10,19 @@
 
 ## Background
 
-TALK ABOUT THE DATA AND HYPOTHESIS
+Actual sales data of my company’s bicycle products from 2014 through 2021 extracted as a CSV from our ERP software.
+Columns were significantly reduced to remove sensitive information that was outside of the scope of this project to maintain confidentiality.
+The relevant data for this project is primarily the material, month, and invoiced quantity.
+
+
+Hypothesis -
+
+Normal years not involving covid will forcast fairly accurately.
+
+Forcasting covid year -  The forcasting will under estimate the amount of sales for 2020,2021 and 2022. Covid restirctions force the population to find outdoor activites. The sales will follow the normal tend but the numbers of sales will follow the 
+                            normal sasonal trends, but the quatity of sales will be much higher. 
+
+Forcasting 2022 and 2023 - The Predictions will overestimate for these years because the data for the preceading two years showed a large spike in sales however with vaccinations and restrictions loosening the number of people will returned to indoor activites.
 
 ## Code - Machine Learning and ETL Approach
 
