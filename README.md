@@ -30,10 +30,7 @@ To deliver the analysis to the end-users, we needed both a front-end user-interf
 
 ## Analysis
 
-PLACEHOLDER
-
-
-PLACEHOLDER IMAGES IF NEEDED
+The erratic nature of Covid sales and logistics shows on the forecasting. Using Facebook Prophet's forecasting with the provided sales data used to train shows fluctuations in early forecasting from 2014 to 2018. The tuned Prophet is much more smoothed out and works just like the Tableau forecasting which uses exponential smoothing and is very linear. It is still interesting to see overall sales forecasted in the future is a continued growth in sales. However when the forecasting is seen broken down by months in the year, the forecasting does not really match the sales spikes that occur over the Covid years.
 
 ![Tables](https://github.com/2Delta/Project-4_MachineLearningIntegration/blob/main/images/tables.png?raw=true)
 
