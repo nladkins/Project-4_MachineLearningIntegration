@@ -10,23 +10,31 @@
 
 ## Background
 
-Actual sales data of my company’s bicycle products from 2014 through 2021 extracted as a CSV from our ERP software.
-Columns were significantly reduced to remove sensitive information that was outside of the scope of this project to maintain confidentiality.
-The relevant data for this project is primarily the material, month, and invoiced quantity.
-
+With ever extending lead times and shipping delays as a result of the explosive growth experienced during COVID pandemic, accurate time series analysis and forecasting are necessary for inventory management and production planning over an entire range of products in order to maintain appropriate inventory levels to meet sales demands over the next 710+ days to determine quantities to place orders with our factory by SKU. Supply chain shortages have exacerbated the situation as sales were capped by available inventory.
 
 Hypothesis -
 
-Normal years not involving covid will forcast fairly accurately.
+Years prior to COVID 2014-2019 should follow a normal trend and the model will test accurately
 
-Forcasting covid year -  The forcasting will under estimate the amount of sales for 2020,2021 and 2022. Covid restirctions force the population to find outdoor activites. The sales will follow the normal tend but the numbers of sales will follow the 
-                            normal sasonal trends, but the quatity of sales will be much higher. 
+COVID Years 2020-2021 have abnormally high sales growth and the forecast will under predict sales
 
-Forcasting 2022 and 2023 - The Predictions will overestimate for these years because the data for the preceading two years showed a large spike in sales however with vaccinations and restrictions loosening the number of people will returned to indoor activites.
+Future forecasting 2022-2023 will be challenging and the model will over predict if 2020-2021 are used in training
 
 ## Code - Machine Learning and ETL Approach
 
+Actual sales data of my company’s products from 2014 through 2021 extracted as a CSV from our ERP software.
 
+Columns were significantly reduced to remove sensitive information that was outside of the scope of this project to maintain confidentiality.
+
+The relevant data for this project is primarily the material, month, and invoiced quantity to perform a time series analysis.
+
+Pandas was utilized to read the CSV and transform the data by grouping by month and material and aggregating the invoiced quantity, then to match Prophet’s required input format. 
+
+Prophet is able to fit non-linear trends with seasonal effects and shifts in trends and was used to model the sales data and forecast demand over the next 24 months to match lead times for the purpose of inventory/production planning. Cross-validation was performed to measure performance and tune hyperparameters.
+
+After tuning the hyperparameters, we are able to minimize root mean squared error to under 500 units per year when training the model to fit 2014-2018 data and testing it to 2019 sales. The best hyperameters are then utilized to fit the model to the entire sales history from 2014 through 2021 and predict values for 2022 and 2023.
+
+Spark was then utilized to load the results to RDS.
 
 ## Architecture
 
@@ -42,7 +50,7 @@ To deliver the analysis to the end-users, we needed both a front-end user-interf
 
 ## Analysis
 
-The erratic nature of Covid sales and logistics shows on the forecasting. Using Facebook Prophet's forecasting with the provided sales data used to train shows fluctuations in early forecasting from 2014 to 2018. The tuned Prophet is much more smoothed out and works just like the Tableau forecasting which uses exponential smoothing and is very linear. It is still interesting to see overall sales forecasted in the future is a continued growth in sales. However when the forecasting is seen broken down by months in the year, the forecasting does not really match the sales spikes that occur over the Covid years.
+The erratic nature of Covid sales and logistics have shown in forecasting when using other methods such as exponential triple smoothing that have resulted in suspiciously high predictions. Thus it was necessary to test other models. Using Facebook Prophet's default parameters to forecast with the provided sales data shows monthly fluctuations as it attempts to model for seasonality. After tuning the hyperparameters, the lowest root mean squared error is reached by smoothing change points and seasonality effects in order to remove noisy data points resulting in a much closer to linear trend. The model seems to fit the data reasonably well when examining by year rather than by month; as it is impossible to forecast for the erratic fluctuations in monthly sales due to large inventory sell offs and limitations of available inventory but could be closer if lead times were shorter. The prophet model seems to be a bit mmore conservative in its predictions vs ETS and seems to be decent candidate for forecasting future demand, but individual analysis of more SKUs will be necessary.
 
 ![Tables](https://github.com/2Delta/Project-4_MachineLearningIntegration/blob/main/images/tables.png?raw=true)
 
